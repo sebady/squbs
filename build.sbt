@@ -71,6 +71,15 @@ lazy val `squbs-admin` = project dependsOn (`squbs-unicomplex`, `squbs-testkit` 
 
 lazy val `squbs-ext` = project dependsOn `squbs-pipeline` % "provided"
 
+// Aggregation of projects for concurrent travis VM builds
+lazy val `squbs-core` = (project in file(".")).
+  aggregate(`squbs-unicomplex`, `squbs-actormonitor`, `squbs-actorregistry`,
+    `squbs-ext`, `squbs-pipeline`, `squbs-testkit`)
+
+// These are largely independent of squbs-core modules
+lazy val `squbs-http` = (project in file(".")).
+  aggregate(`squbs-httpclient`, `squbs-admin`, `squbs-pattern`, `squbs-zkcluster`)
+
 publishTo in ThisBuild := {
   val nexus = "https://oss.sonatype.org/"
   if (version.value.trim.endsWith("SNAPSHOT"))
@@ -113,5 +122,10 @@ pomExtra in ThisBuild :=
         <id>anilgursel</id>
         <name>Anil Gursel</name>
         <url>https://github.com/anilgursel</url>
+      </developer>
+      <developer>
+        <id>sebady</id>
+        <name>Sherif Ebady</name>
+        <url>https://github.com/sebady</url>
       </developer>
     </developers>

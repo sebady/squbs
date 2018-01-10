@@ -67,7 +67,7 @@ class PersistentQueue[T](config: QueueConfig, onCommitCallback: Int => Unit = _ 
   private val Tailer = "tailer.idx"
   private val path = new File(persistDir, Tailer)
 
-  private var indexMounted = false
+  @volatile private var indexMounted = false
   private var indexFile: IndexFile = _
   private var indexStore: MappedBytesStore = _
   private var closed = false

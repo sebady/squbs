@@ -23,6 +23,7 @@ import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, Keep, RunnableGraph, Sin
 import akka.stream.{AbruptTerminationException, ActorMaterializer, ClosedShape, ThrottleMode}
 import akka.util.ByteString
 import org.scalatest.concurrent.Eventually
+import org.scalatest.time.{Seconds, Span}
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 import org.squbs.testkit.Timeouts._
 
@@ -35,6 +36,7 @@ abstract class BroadcastBufferSpec[T: ClassTag, Q <: QueueSerializer[T] : Manife
   implicit val system = ActorSystem(s"Broadcast${typeName}BufferSpec")
   implicit val mat = ActorMaterializer()
   implicit val serializer = QueueSerializer[T]()
+  implicit override val patienceConfig = PatienceConfig(timeout = Span(3, Seconds)) // extend eventually timeout for CI
   import StreamSpecUtil._
   import system.dispatcher
 

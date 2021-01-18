@@ -32,6 +32,8 @@ before_install:
     openssl aes-256-cbc -pass pass:${ENCRYPTION_PASSWORD} -in credentials.sbt.enc -out local.credentials.sbt -d
   fi
 
+sbt_args: -no-colors
+
 script:
   - sbt ++$TRAVIS_SCALA_VERSION -jvm-opts jvmopts clean coverage test
   - sbt ++$TRAVIS_SCALA_VERSION coverageReport

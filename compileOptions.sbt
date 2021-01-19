@@ -54,7 +54,7 @@ scalacOptions in ThisBuild ++= Seq(    // Copied from https://tpolecat.github.io
 
 scalacOptions in ThisBuild ++= {
   CrossVersion.binaryScalaVersion(scalaVersion.value) match {
-    case "2.12" => Seq("-Ybackend-parallelism", par.toString)
+    case "2.12" | "2.13" => Seq("-Ybackend-parallelism", par.toString)
     case _ => Nil
   }
 }
